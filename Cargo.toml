@@ -4,6 +4,9 @@ description = "A Rust crate for providing helpful methods in online judging"
 version = "0.1.0"
 authors = ["Martin Muñoz <im.mmun@gmail.com>"]
 license = "AGPL-3.0"
+documentation = "https://github.com/DMOJ/dmoj-rust"
+homepage = "https://github.com/DMOJ/dmoj-rust"
+repository = "https://github.com/DMOJ/dmoj-rust"
 
 [dependencies]
 lazy_static = "0.2.1"
