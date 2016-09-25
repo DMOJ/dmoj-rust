@@ -4,6 +4,6 @@ A Rust crate for providing helpful methods in online judging.
 
 ## Macros
 
-### `println!` and `print!`
+### `print!` and `println!`
 
-This crate exports `println!` and `print!` macros that shadow the prelude versions. These versions are about 10 times faster, fully API compatible, but sacrifice thread safety.
+This crate exports `print!` and `println!` macros that shadow the prelude versions. These versions are about 10 times faster and fully API compatible, but sacrifice thread safety.
