@@ -35,3 +35,15 @@ macro_rules! print {
         }
     } }
 }
+
+#[macro_export]
+macro_rules! flush {
+    ($($arg:tt)*) => { {
+        use std::io::Write;
+
+        unsafe {
+            let stdout = $crate::STDOUT.get().as_mut().unwrap();
+            stdout.flush().unwrap();
+        }
+    } }
+}
