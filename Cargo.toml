@@ -1,0 +1,7 @@
+[package]
+name = "dmoj"
+version = "0.1.0"
+authors = ["Martin Muñoz <im.mmun@gmail.com>"]
+
+[dependencies]
+lazy_static = "0.2.1"
