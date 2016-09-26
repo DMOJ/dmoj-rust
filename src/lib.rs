@@ -1,26 +1,33 @@
 #[macro_use]
 extern crate lazy_static;
 
-mod sync;
+extern crate libc;
 
-use std::io::{BufWriter, Stdout};
+use std::io::{Write, BufWriter, Stdout};
+
+mod sync;
 use sync::NotThreadSafe;
 
 lazy_static! {
     pub static ref STDOUT: NotThreadSafe<BufWriter<Stdout>> = {
+        unsafe { libc::atexit(flush); }
         NotThreadSafe::new(BufWriter::new(std::io::stdout()))
     };
+}
+
+pub fn stdout() -> &'static mut BufWriter<Stdout> {
+    unsafe { STDOUT.get().as_mut().unwrap() }
+}
+
+extern "C" fn flush() {
+    stdout().flush().unwrap();
 }
 
 #[macro_export]
 macro_rules! println {
     ($($arg:tt)*) => { {
         use std::io::Write;
-
-        unsafe {
-            let stdout = $crate::STDOUT.get().as_mut().unwrap();
-            writeln!(stdout, $($arg)*).unwrap();
-        }
+        writeln!($crate::stdout(), $($arg)*).unwrap();
     } }
 }
 
@@ -28,22 +35,6 @@ macro_rules! println {
 macro_rules! print {
     ($($arg:tt)*) => { {
         use std::io::Write;
-
-        unsafe {
-            let stdout = $crate::STDOUT.get().as_mut().unwrap();
-            write!(stdout, $($arg)*).unwrap();
-        }
-    } }
-}
-
-#[macro_export]
-macro_rules! flush {
-    ($($arg:tt)*) => { {
-        use std::io::Write;
-
-        unsafe {
-            let stdout = $crate::STDOUT.get().as_mut().unwrap();
-            stdout.flush().unwrap();
-        }
+        write!($crate::stdout(), $($arg)*).unwrap();
     } }
 }
