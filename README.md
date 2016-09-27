@@ -21,3 +21,34 @@ fn main() {
 ### `print!`, `println!`
 
 This crate provides `print!` and `println!` macros that shadow the prelude versions. These versions are about 10 times faster and fully API compatible, but sacrifice thread safety.
+
+#### Example
+
+```rust
+#[macro_use] extern crate dmoj;
+
+fn main() {
+    print!("Hello, ");
+    println!("World!");
+}
+```
+
+### `flush!`
+
+Flushes the stdout buffer.
+
+#### Example
+
+```
+#[macro_use] extern crate dmoj;
+
+use std::thread;
+use std::time::Duration;
+
+fn main() {
+    print!("Hello,");
+    flush!();
+    thread::sleep(Duration::from_secs(2));
+    println!(" World!");
+}
+```

@@ -10,7 +10,7 @@ use sync::NotThreadSafe;
 
 lazy_static! {
     pub static ref STDOUT: NotThreadSafe<BufWriter<Stdout>> = {
-        unsafe { libc::atexit(flush); }
+        unsafe { libc::atexit(flush_stdout_at_exit); }
         NotThreadSafe::new(BufWriter::new(std::io::stdout()))
     };
 }
@@ -19,8 +19,12 @@ pub fn stdout() -> &'static mut BufWriter<Stdout> {
     unsafe { STDOUT.get().as_mut().unwrap() }
 }
 
-extern "C" fn flush() {
+pub fn flush() {
     stdout().flush().unwrap();
+}
+
+extern "C" fn flush_stdout_at_exit() {
+    flush();
 }
 
 #[macro_export]
@@ -37,4 +41,9 @@ macro_rules! print {
         use std::io::Write;
         write!($crate::stdout(), $($arg)*).unwrap();
     } }
+}
+
+#[macro_export]
+macro_rules! flush {
+    () => { $crate::flush() }
 }
