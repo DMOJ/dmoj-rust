@@ -4,12 +4,13 @@ A Rust crate for providing helpful methods in online judging.
 
 - [Usage](#usage)
 - [Provided macros](#provided-macros)
+    - [`print!`, `println!`](#print-println)
+    - [`flush!`](#flush)
 
 ## Usage
 
 ```rust
-#[macro_use]
-extern crate dmoj;
+#[macro_use] extern crate dmoj;
 
 fn main() {
     println!("Hello, World!");
@@ -39,7 +40,7 @@ Flushes the stdout buffer.
 
 #### Example
 
-```
+```rust
 #[macro_use] extern crate dmoj;
 
 use std::thread;
