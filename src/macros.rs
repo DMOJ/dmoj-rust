@@ -42,7 +42,6 @@ macro_rules! readbyte {
 
 #[macro_export]
 macro_rules! scan {
-    ($arg:tt) => {
-        $crate::scan::<$arg>()
-    }
+    ($arg:tt) => { $crate::scan::<$arg>() };
+    ($($arg:tt)+) => { ($($crate::scan::<$arg>(),)*) };
 }

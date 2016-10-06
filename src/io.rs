@@ -138,12 +138,16 @@ impl<'a> Stdin<'a> {
     }
 }
 
+pub fn read_byte() -> u8 {
+    stdin().read_byte()
+}
+
 pub fn read_char() -> char {
     stdin().read_char()
 }
 
-pub fn read_byte() -> u8 {
-    stdin().read_byte()
+pub fn read_line<'a>() -> &'a str {
+    "lol"
 }
 
 /// Scanning

@@ -11,5 +11,6 @@ pub use io::{
     scan,
     stdout,
     read_char,
-    read_byte
+    read_byte,
+    read_line,
 };
