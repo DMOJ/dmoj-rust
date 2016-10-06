@@ -10,22 +10,23 @@ use nom::IResult;
 
 use sync::NotThreadSafe;
 use scan::{int, float};
-// use scan;
 
-const DEFAULT_BUF_SIZE: usize = 64 * 1024;
-static mut STDIN_BUF: [u8; DEFAULT_BUF_SIZE] = [0; DEFAULT_BUF_SIZE];
+const BUF_SIZE: usize = 64 * 1024;
+static mut STDIN_BUF: [u8; BUF_SIZE] = [0; BUF_SIZE];
 
 lazy_static! {
     pub static ref STDIN: NotThreadSafe<Stdin<'static>> = {
-        NotThreadSafe::new(
-            Stdin::new(unsafe { &mut STDIN_BUF })
-        )
+        let stdin_buf = unsafe { &mut STDIN_BUF };
+        NotThreadSafe::new(Stdin::new(stdin_buf))
     };
 }
 
 lazy_static! {
     pub static ref STDOUT: NotThreadSafe<BufWriter<Stdout>> = {
-        unsafe { libc::atexit(flush_stdout_at_exit); }
+        unsafe {
+            libc::atexit(flush_stdout_at_exit);
+        }
+
         NotThreadSafe::new(BufWriter::new(io::stdout()))
     };
 }
