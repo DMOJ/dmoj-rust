@@ -192,6 +192,30 @@ impl Scan<u64> for Stdin<'static> {
     }
 }
 
+impl Scan<i8> for Stdin<'static> {
+    fn scan(&mut self) -> i8 {
+        scan_bytes(self.scan_signed_integer())
+    }
+}
+
+impl Scan<i16> for Stdin<'static> {
+    fn scan(&mut self) -> i16 {
+        scan_bytes(self.scan_signed_integer())
+    }
+}
+
+impl Scan<i32> for Stdin<'static> {
+    fn scan(&mut self) -> i32 {
+        scan_bytes(self.scan_signed_integer())
+    }
+}
+
+impl Scan<i64> for Stdin<'static> {
+    fn scan(&mut self) -> i64 {
+        scan_bytes(self.scan_signed_integer())
+    }
+}
+
 fn scan_bytes<T>(bytes: &[u8]) -> T where T: FromStr {
     unsafe {
         match str::from_utf8_unchecked(bytes).parse::<T>() {

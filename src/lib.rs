@@ -9,5 +9,7 @@ mod sync;
 
 pub use io::{
     scan,
-    stdout
+    stdout,
+    read_char,
+    read_byte
 };

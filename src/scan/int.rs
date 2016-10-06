@@ -2,7 +2,6 @@ use nom::digit;
 
 named!(sign, recognize!(one_of!("+-")));
 named!(plus, recognize!(char!('+')));
-named!(dot, recognize!(char!('.')));
 
 named!(pub unsigned_integer, recognize!(
     chain!(plus? ~ digit, || {})
