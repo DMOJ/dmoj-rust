@@ -43,27 +43,6 @@ extern "C" fn flush_stdout_at_exit() {
     flush();
 }
 
-#[macro_export]
-macro_rules! println {
-    ($($arg:tt)*) => { {
-        use std::io::Write;
-        writeln!($crate::stdout(), $($arg)*).unwrap();
-    } }
-}
-
-#[macro_export]
-macro_rules! print {
-    ($($arg:tt)*) => { {
-        use std::io::Write;
-        write!($crate::stdout(), $($arg)*).unwrap();
-    } }
-}
-
-#[macro_export]
-macro_rules! flush {
-    () => { $crate::flush() }
-}
-
 /// Reading and Scanning
 
 const DEFAULT_BUF_SIZE: usize = 64 * 1024;
@@ -168,16 +147,6 @@ impl<'a> Stdin<'a> {
     }
 }
 
-#[macro_export]
-macro_rules! readchar {
-    () => { $crate::read_char() }
-}
-
-#[macro_export]
-macro_rules! readbyte {
-    () => { $crate::read_byte() }
-}
-
 pub fn read_char() -> char {
     stdin().read_char()
 }
@@ -187,13 +156,6 @@ pub fn read_byte() -> u8 {
 }
 
 /// Scanning
-
-#[macro_export]
-macro_rules! scan {
-    ($arg:tt) => {
-        $crate::scan::<$arg>()
-    }
-}
 
 pub fn scan<T>() -> T where Stdin<'static>: Scan<T> {
     stdin().scan()
@@ -247,3 +209,5 @@ fn scan_bytes<T>(bytes: &[u8]) -> T where T: FromStr {
         }
     }
 }
+
+mod macros;
