@@ -96,6 +96,10 @@ impl<'a> Stdin<'a> {
         self.read_byte() as char
     }
 
+    fn read_line<'b>(&mut self) -> &'b str {
+        unimplemented!()
+    }
+
     fn scan_float(&mut self) -> &[u8] {
         self.scan_nom_parser(float::float)
     }
@@ -147,7 +151,7 @@ pub fn read_char() -> char {
 }
 
 pub fn read_line<'a>() -> &'a str {
-    "lol"
+    stdin().read_line()
 }
 
 /// Scanning
