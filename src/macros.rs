@@ -1,6 +1,5 @@
 /// Printing
 
-
 #[macro_export]
 macro_rules! println {
     ($($arg:tt)*) => { {
@@ -23,8 +22,8 @@ macro_rules! flush {
 }
 
 
-/// Reading
 
+/// Reading
 
 #[macro_export]
 macro_rules! readchar {
@@ -37,11 +36,11 @@ macro_rules! readbyte {
 }
 
 
-/// Scanning
 
+/// Scanning
 
 #[macro_export]
 macro_rules! scan {
-    ($arg:tt) => { $crate::scan::<$arg>() };
-    ($($arg:tt)+) => { ($($crate::scan::<$arg>(),)*) };
+    ($arg:ty) => { $crate::scan::<$arg>() };
+    ($($arg:ty)+) => { ($($crate::scan::<$arg>(),)*) };
 }

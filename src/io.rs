@@ -164,64 +164,14 @@ pub trait Scan<T> {
     fn scan(&mut self) -> T;
 }
 
-impl Scan<f32> for Stdin<'static> {
-    fn scan(&mut self) -> f32 {
-        scan_bytes(self.scan_float())
-    }
-}
-
-impl Scan<f64> for Stdin<'static> {
-    fn scan(&mut self) -> f64 {
-        scan_bytes(self.scan_float())
-    }
-}
-
-impl Scan<u8> for Stdin<'static> {
-    fn scan(&mut self) -> u8 {
-        scan_bytes(self.scan_unsigned_integer())
-    }
-}
-
-impl Scan<u16> for Stdin<'static> {
-    fn scan(&mut self) -> u16 {
-        scan_bytes(self.scan_unsigned_integer())
-    }
-}
-
-impl Scan<u32> for Stdin<'static> {
-    fn scan(&mut self) -> u32 {
-        scan_bytes(self.scan_unsigned_integer())
-    }
-}
-
-impl Scan<u64> for Stdin<'static> {
-    fn scan(&mut self) -> u64 {
-        scan_bytes(self.scan_unsigned_integer())
-    }
-}
-
-impl Scan<i8> for Stdin<'static> {
-    fn scan(&mut self) -> i8 {
-        scan_bytes(self.scan_signed_integer())
-    }
-}
-
-impl Scan<i16> for Stdin<'static> {
-    fn scan(&mut self) -> i16 {
-        scan_bytes(self.scan_signed_integer())
-    }
-}
-
-impl Scan<i32> for Stdin<'static> {
-    fn scan(&mut self) -> i32 {
-        scan_bytes(self.scan_signed_integer())
-    }
-}
-
-impl Scan<i64> for Stdin<'static> {
-    fn scan(&mut self) -> i64 {
-        scan_bytes(self.scan_signed_integer())
-    }
+macro_rules! impl_scan {
+    ($x:ident, $t:ty) => {
+        impl Scan<$t> for Stdin<'static> {
+            fn scan(&mut self) -> $t {
+                scan_bytes(self.$x())
+            }
+        }
+    };
 }
 
 fn scan_bytes<T>(bytes: &[u8]) -> T where T: FromStr {
@@ -232,3 +182,18 @@ fn scan_bytes<T>(bytes: &[u8]) -> T where T: FromStr {
         }
     }
 }
+
+impl_scan!(scan_float, f32);
+impl_scan!(scan_float, f64);
+
+impl_scan!(scan_unsigned_integer, u8);
+impl_scan!(scan_unsigned_integer, u16);
+impl_scan!(scan_unsigned_integer, u32);
+impl_scan!(scan_unsigned_integer, u64);
+impl_scan!(scan_unsigned_integer, usize);
+
+impl_scan!(scan_signed_integer, i8);
+impl_scan!(scan_signed_integer, i16);
+impl_scan!(scan_signed_integer, i32);
+impl_scan!(scan_signed_integer, i64);
+impl_scan!(scan_signed_integer, isize);
