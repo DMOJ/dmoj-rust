@@ -16,27 +16,6 @@ macro_rules! print {
     } }
 }
 
-#[macro_export]
-macro_rules! flush {
-    () => { $crate::flush() }
-}
-
-
-
-/// Reading
-
-#[macro_export]
-macro_rules! readchar {
-    () => { $crate::read_char() }
-}
-
-#[macro_export]
-macro_rules! readbyte {
-    () => { $crate::read_byte() }
-}
-
-
-
 /// Scanning
 
 #[macro_export]
