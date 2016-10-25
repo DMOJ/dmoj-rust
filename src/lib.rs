@@ -3,6 +3,8 @@ extern crate lazy_static;
 
 extern crate libc;
 
+mod macros;
+
 use std::io::{Write, BufWriter, Stdout};
 
 mod sync;
@@ -25,25 +27,4 @@ pub fn flush() {
 
 extern "C" fn flush_stdout_at_exit() {
     flush();
-}
-
-#[macro_export]
-macro_rules! println {
-    ($($arg:tt)*) => { {
-        use std::io::Write;
-        writeln!($crate::stdout(), $($arg)*).unwrap();
-    } }
-}
-
-#[macro_export]
-macro_rules! print {
-    ($($arg:tt)*) => { {
-        use std::io::Write;
-        write!($crate::stdout(), $($arg)*).unwrap();
-    } }
-}
-
-#[macro_export]
-macro_rules! flush {
-    () => { $crate::flush() }
 }
