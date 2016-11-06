@@ -1,4 +1,4 @@
-# dmoj-rust
+# dmoj-rust [![Travis CI](https://secure.travis-ci.org/DMOJ/dmoj-rust.svg?branch=master)](http://travis-ci.org/DMOJ/dmoj-rust)
 
 A Rust crate for providing helpful methods in online judging.
 
