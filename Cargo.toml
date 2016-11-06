@@ -1,7 +1,7 @@
 [package]
 name = "dmoj"
 description = "A Rust crate for providing helpful methods in online judging"
-version = "0.1.3"
+version = "0.1.4"
 authors = ["Martin Muñoz <im.mmun@gmail.com>"]
 license = "AGPL-3.0"
 documentation = "https://github.com/DMOJ/dmoj-rust"
