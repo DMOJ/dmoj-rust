@@ -6,6 +6,7 @@ A Rust crate for providing helpful methods in online judging.
 - [Provided macros](#provided-macros)
     - [`print!`, `println!`](#print-println)
     - [`flush!`](#flush)
+    - [`scan!`](#scan)
 
 ## Usage
 
@@ -51,5 +52,30 @@ fn main() {
     flush!();
     thread::sleep(Duration::from_secs(2));
     println!(" World!");
+}
+```
+
+### `scan!`
+
+```rust
+scan!(T) -> T;
+scan!(T1, ..., Tn) -> (T1, ..., Tn);
+```
+
+A macro for scanning values from stdin. Currently, only scanning integers is supported.
+Note that the scanner will continue to read stdin until it finds something that looks like an integer.
+If the macro is called with multiple type arguments a tuple of the values will be returned, otherwise
+the value itself is returned.
+
+#### Example
+
+```rust
+#[macro_use] extern crate dmoj;
+
+fn main() {
+    // For example, if stdin contains " 2020 \n  +4 test \n   -19" then
+
+    print!("{:?}", scan!(u64));      // prints "2020", and
+    print!("{:?}", scan!(i16, i16)); // prints "(4, -19)"
 }
 ```

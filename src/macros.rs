@@ -1,3 +1,12 @@
+/// Macros for reading from stdin
+
+#[macro_export]
+macro_rules! scan {
+    ($t:ty) => { $crate::scan::<$t>() };
+    ($($t:ty),+) => { ($($crate::scan::<$t>(),)*) };
+}
+
+
 /// Macros for writing to stdout
 
 #[macro_export]
