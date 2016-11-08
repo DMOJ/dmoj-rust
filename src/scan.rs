@@ -125,6 +125,14 @@ impl_scan_unsigned_integer!(u32);
 impl_scan_unsigned_integer!(u64);
 impl_scan_unsigned_integer!(usize);
 
+impl<R: Read> Scan<char> for CopyingBufReader<R> {
+    fn scan(&mut self) -> char {
+        let c = self.peek().unwrap() as char;
+        self.consume(1);
+        c
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use buf::CopyingBufReader;
@@ -197,5 +205,19 @@ mod tests {
     fn scanning_unsigned_integers_panics_correctly_3() {
         let mut buf = CopyingBufReader::with_capacity(4, &b"+ 1"[..]);
         Scan::<u64>::scan(&mut buf);
+    }
+
+    #[test]
+    fn scanning_chars_works_correctly() {
+        let mut buf = CopyingBufReader::with_capacity(4, &b"abcdefghi"[..]);
+        assert_eq!(Scan::<char>::scan(&mut buf), 'a');
+        assert_eq!(Scan::<char>::scan(&mut buf), 'b');
+        assert_eq!(Scan::<char>::scan(&mut buf), 'c');
+        assert_eq!(Scan::<char>::scan(&mut buf), 'd');
+        assert_eq!(Scan::<char>::scan(&mut buf), 'e');
+        assert_eq!(Scan::<char>::scan(&mut buf), 'f');
+        assert_eq!(Scan::<char>::scan(&mut buf), 'g');
+        assert_eq!(Scan::<char>::scan(&mut buf), 'h');
+        assert_eq!(Scan::<char>::scan(&mut buf), 'i');
     }
 }
