@@ -62,10 +62,7 @@ scan!(T) -> T;
 scan!(T1, ..., Tn) -> (T1, ..., Tn);
 ```
 
-A macro for scanning values from stdin. Currently, only scanning integers is supported.
-Note that the scanner will continue to read stdin until it finds something that looks like an integer.
-If the macro is called with multiple type arguments a tuple of the values will be returned, otherwise
-the value itself is returned.
+A macro for scanning values from stdin. Currently, only scanning chars and integers is supported. Note that when scanning integers, the scanner will continue to read stdin until it finds something that looks like an integer. If the macro is called with multiple type arguments a tuple of the values will be returned, otherwise the value itself is returned.
 
 #### Example
 
@@ -73,9 +70,11 @@ the value itself is returned.
 #[macro_use] extern crate dmoj;
 
 fn main() {
-    // For example, if stdin contains " 2020 \n  +4 test \n   -19" then
+    // For example, if stdin contains " 2020 \n  +4 test \n   -19xy" then
 
     print!("{:?}", scan!(u64));      // prints "2020", and
     print!("{:?}", scan!(i16, i16)); // prints "(4, -19)"
+    print!("{:?}", scan!(char));     // prints "'x'"
+    print!("{:?}", scan!(char));     // prints "'y'"
 }
 ```
