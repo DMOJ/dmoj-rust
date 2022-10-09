@@ -133,6 +133,27 @@ impl<R: Read> Scan<char> for CopyingBufReader<R> {
     }
 }
 
+impl<R: Read> Scan<String> for CopyingBufReader<R> {
+    fn scan(&mut self) -> String {
+        let mut s = String::new();
+
+        if self.peek().unwrap() as char == '\n' {
+            self.consume(1);
+        }
+        loop {
+            let c = self.peek().unwrap_or(b'\n') as char;
+            if c == '\n' {
+                // self.consume(1);
+                break;
+            } else {
+                self.consume(1);
+                s.push(c);
+            }
+        }
+        s
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use buf::CopyingBufReader;
@@ -219,5 +240,16 @@ mod tests {
         assert_eq!(Scan::<char>::scan(&mut buf), 'g');
         assert_eq!(Scan::<char>::scan(&mut buf), 'h');
         assert_eq!(Scan::<char>::scan(&mut buf), 'i');
+    }
+
+    #[test]
+    fn scanning_strings_works_correctly() {
+        let mut buf = CopyingBufReader::with_capacity(4, &b"crazy\npeter\npan\n1\n\nhotdog"[..]);
+        assert_eq!(Scan::<String>::scan(&mut buf), String::from("crazy"));
+        assert_eq!(Scan::<String>::scan(&mut buf), String::from("peter"));
+        assert_eq!(Scan::<String>::scan(&mut buf), String::from("pan"));
+        assert_eq!(Scan::<String>::scan(&mut buf), String::from("1"));
+        assert_eq!(Scan::<String>::scan(&mut buf), String::new());
+        assert_eq!(Scan::<String>::scan(&mut buf), String::from("hotdog"));
     }
 }
